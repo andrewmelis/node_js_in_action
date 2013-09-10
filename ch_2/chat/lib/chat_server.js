@@ -1,4 +1,4 @@
-//variable initializations
+ //variable initializations
 var socketio = require('socket.io');
 var io;
 var guestNumber = 1;
@@ -8,7 +8,7 @@ var currentRoom = {};
 
 exports.listen = function(server) {
   io = socketio.listen(server);	    //start Socket.IO server, piggybacks on existing HTTP server
-  io.set('log level', 1);	    
+  io.set('log level', 1);
 
   io.sockets.on('connection', function (socket) {     //define how each user connectio will be handled
     guestNumber = assignGuestName(socket, guestNumber, nickNames, namesUsed);	//assign user a guest name when they connect
@@ -47,7 +47,7 @@ function joinRoom(socket, room) {
 
   var usersInRoom = io.sockets.clients(room);	    //determine what other users are in same room as user
 
-  if (usersInRoom.length > 1) {			    //if other users exist, summarize who they are 
+  if (usersInRoom.length > 1) {			    //if other users exist, summarize who they are
     var usersInRoomSummary = 'users currently in ' + room + ': ';
     for (var index in usersInRoom) {
       var userSocketId = usersInRoom[index].id;
@@ -75,7 +75,7 @@ function handleNameChangeAttempts(socket, nickNames, namesUsed) {
 	var previousName = nickNames[socket.id];
 	var previousNameIndex = namesUsed.indexOf(previousName);
 	namesUsed.push(name);
-	nickNames[socket.id] = name;	
+	nickNames[socket.id] = name;
 
 	delete namesUsed[previousNameIndex];	  //remove previous name to make available to other clients
 	socket.emit('nameResult', {
@@ -113,7 +113,7 @@ function handleRoomJoining(socket) {
 function handleClientsDisconnection(socket) {
   socket.on('disconnect', function() {
     var nameIndex = namesUsed.indexOf(nickNames[socket.id]);
-    delete namesUsed[namesIndex];
+    delete namesUsed[nameIndex];
     delete nickNames[socket.id];
   });
 }
