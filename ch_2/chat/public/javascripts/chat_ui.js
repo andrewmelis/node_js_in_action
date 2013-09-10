@@ -14,7 +14,8 @@ function processUserInput(chatApp, socket) {
   var message = $('#send-message').val();
   var systemMessage;
 
-  if (message.charAt(0) == '/') {     //if user input begins with a slash, treat as a command
+  if (message[0] == '/') {     //if user input begins with a slash, treat as a command
+  //if (message.charAt(0) == '/') {     //if user input begins with a slash, treat as a command
     systemMessage = chatApp.processCommand(message);
     if (systemMessage) {
       console.log("in processUserInput--systemMessage " + systemMessage);

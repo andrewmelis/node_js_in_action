@@ -2,7 +2,7 @@
 //takes single argument, a Socket.IO socket
 var Chat = function(socket) {
   this.socket = socket;
-});
+};
 
 //sends chat messages
 Chat.prototype.sendMessage = function(room, text) {
