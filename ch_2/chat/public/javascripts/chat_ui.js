@@ -50,19 +50,19 @@ $(document).ready(function() {
     console.log("after name result " + message);
   });
 
-  socket.on('joinResult', function(result) {
+  socket.on('joinResult', function(result) {	  //display results of room change
     $('#room').text(result.room);
     $('#messages').append(divSystemContentElement('Room changed.'));
     console.log("after join result " + result);
   });
 
-  socket.on('message', function(message) {
+  socket.on('message', function(message) {	  //display received messages
     var newElement = $('<div></div>').text(message.text);
     $('#messages').append(newElement);
     console.log("after message result " + message);
   });
 
-  socket.on('rooms', function(rooms) {
+  socket.on('rooms', function(rooms){		  //display list of rooms available
     $('#room-list').empty();
 
     for(var room in rooms) {
@@ -73,19 +73,19 @@ $(document).ready(function() {
       console.log("in rooms " + room);
     }
 
-    $('#room-list div').click(function() {
+    $('#room-list div').click(function() {	  //allow click of a room name to change to that room
       chatApp.processCommand('/join ' + $(this).text());
       $('#send-message').focus();
     });
   });
 
-  setInterval(function() {
+  setInterval(function() {    //request list of rooms intermittenly
     socket.emit('rooms');
   }, 1000);
 
   $('#send-message').focus();
 
-  $('#send-form').submit(function() {
+  $('#send-form').submit(function() {		//allow clicking the send button to send a chat message 
     processUserInput(chatApp, socket);
     return false;
   });
